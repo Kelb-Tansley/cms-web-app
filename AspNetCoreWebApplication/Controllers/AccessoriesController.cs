@@ -1,5 +1,6 @@
 ﻿using CMS.Systems.StockManagement.Entities.StockRoot;
 using CMS.Systems.StockManagement.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace CMS.Systems.StockManagement.Controllers
 {
+    //[Authorize]
     [ApiController]
     [Route("[controller]")]
     public class AccessoriesController : ControllerBase

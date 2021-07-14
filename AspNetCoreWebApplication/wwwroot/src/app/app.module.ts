@@ -21,7 +21,8 @@ import { NumbersOnly } from './directives/numbersOnly';
 
 const appRoutes: Routes = [
    { path: '', component: HomeComponent, pathMatch: 'full' },
-  { path: 'stock', component: StockComponent, canActivate: [AuthorizeGuard] },
+  { path: 'stock', component: StockComponent }
+  //, canActivate: [AuthorizeGuard]
 ]
 
 @NgModule({
