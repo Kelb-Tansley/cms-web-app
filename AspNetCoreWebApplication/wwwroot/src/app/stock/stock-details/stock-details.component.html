@@ -1,0 +1,150 @@
+<div class="container-fluid">
+  <form #stockDetailsForm="ngForm" class="container-fluid form-full-width" (ngSubmit)="OnSubmitDetails()">
+    <div class="row">
+      <div class="col-sm-6">
+        <h6 style="margin-top: 12px; margin-left: -16px;">Stock Details:</h6>
+      </div>
+      <div class="col-sm-3">
+        <button class="button" mat-stroked-button color="primary" type="submit" (click)="onSubmit()"
+          [disabled]="!stockDetailsForm.valid">SUBMIT</button>
+      </div>
+      <div class="col-sm-3">
+        <button class="button" mat-raised-button color="accent" (click)="onCancel()">CANCEL</button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="container-fluid">
+        <div class="row">
+          <mat-form-field class="form-full-width">
+            <input required matInput [(ngModel)]="stockItem.registrationNumber" type="text" name="regNum"
+              placeholder="Registration Number">
+            <mat-error *ngIf="entry.invalid">{{getErrorMessage()}}</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="row">
+          <mat-form-field class="form-full-width">
+            <input required matInput [(ngModel)]="stockItem.vinNumber" type="text" name="vinNum"
+              placeholder="Vehicle Identification Number" value="VIN Number">
+          </mat-form-field>
+        </div>
+        <div class="row">
+          <mat-form-field class="form-full-width">
+            <input matInput [(ngModel)]="stockItem.manufacturer" type="text" [ngModelOptions]="{standalone: true}"
+              placeholder="Manufacturer" value="Manufacturer">
+          </mat-form-field>
+        </div>
+        <div class="row">
+          <mat-form-field class="form-full-width">
+            <input matInput [(ngModel)]="stockItem.modelDescription" type="text" [ngModelOptions]="{standalone: true}"
+              placeholder="Model Description" value="ModelDescription">
+          </mat-form-field>
+        </div>
+        <div class="row">
+          <mat-form-field class="form-full-width">
+            <input matInput NumbersOnly [allowDecimals]="false" type="text" [(ngModel)]="stockItem.modelYear"
+              [ngModelOptions]="{standalone: true}" placeholder="Model Year" value="2021">
+          </mat-form-field>
+        </div>
+        <div class="row">
+          <mat-form-field class="form-full-width">
+            <input matInput NumbersOnly [allowDecimals]="false" type="text"
+              [(ngModel)]="stockItem.currentKilometreReading" [ngModelOptions]="{standalone: true}"
+              placeholder="Current Kilometre Reading" value="125637">
+          </mat-form-field>
+        </div>
+        <div class="row">
+          <mat-form-field class="form-full-width">
+            <input matInput [(ngModel)]="stockItem.colour" type="text" [ngModelOptions]="{standalone: true}"
+              placeholder="Colour" value="Red">
+          </mat-form-field>
+        </div>
+        <div class="row">
+          <mat-form-field class="form-full-width">
+            <input matInput NumbersOnly type="text" [(ngModel)]="stockItem.retailPrice"
+              [ngModelOptions]="{standalone: true}" placeholder="Retail Price" value="1000">
+            <span matPrefix>R&nbsp;</span>
+          </mat-form-field>
+        </div>
+        <div class="row">
+          <mat-form-field class="form-full-width">
+            <input matInput NumbersOnly type="text" [(ngModel)]="stockItem.costPrice"
+              [ngModelOptions]="{standalone: true}" placeholder="Cost Price" value="1000">
+            <span matPrefix>R&nbsp;</span>
+          </mat-form-field>
+        </div>
+        <div class="row">
+          <mat-form-field class="form-full-width">
+            <mat-label>Accessories</mat-label>
+
+            <mat-select disableRipple multiple [formControl]="accessoriesForm">
+              <!-- [ngModelOptions]="{standalone: true}" [(ngModel)]="stockItem.accessories" -->
+              <mat-select-trigger>
+                {{accessoriesForm.value ? accessoriesForm.value[0].name : ''}}
+                <span *ngIf="accessoriesForm.value?.length > 1" class="form-additional-selection">
+                  (+{{accessoriesForm.value.length - 1}} {{accessoriesForm.value?.length === 2 ? 'other' : 'others'}})
+                </span>
+              </mat-select-trigger>
+              <mat-option *ngFor="let acc of accessoriesList" [value]="acc">{{acc.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row">
+      <div class="myform-wrapper container-fluid">
+        <mat-form-field class="form-full-width">
+          <div class="container-fluid">
+            <mat-toolbar>
+              <!-- Readonly Input to show File names -->
+              <input matInput [(ngModel)]="myfilename" readonly name="memberContactNo" />
+
+              <!-- Browse Button -->
+              <button mat-flat-button color="primary">
+                BROWSE
+              </button>
+            </mat-toolbar>
+
+            <!-- Fetch selected filed on change -->
+            <input type="file" #UploadFileInput id="fileUpload" multiple="multiple" (change)="fileChangeEvent($event)"
+              name="fileUpload" accept="image/*" />
+          </div>
+        </mat-form-field>
+
+        <div class="row">
+          <div class="container-fluid">
+            <!-- <mat-radio-group aria-label="Select Primary Image" class="example-radio-group"> -->
+            <ol>
+              <li *ngFor="let vehicleStockImg of vehicleStockImages" [value]="vehicleStockImg">
+                <mat-card class="example-card" *ngIf="vehicleStockImg.stockImage!=''">
+                  <mat-card-header>
+                    <mat-card-title style="font-size: 16px;">
+                      <mat-form-field class="form-full-width">
+                        <input required matInput [(ngModel)]="vehicleStockImg.name" name="imageName"
+                          placeholder="Image Name" value="Image Name">
+                      </mat-form-field>
+                    </mat-card-title>
+                  </mat-card-header>
+                  <img mat-card-image [src]="vehicleStockImg.stockImage">
+                  <mat-card-content>
+                  </mat-card-content>
+                  <mat-card-actions>
+                    <!-- <mat-radio-button style="vertical-align: bottom;" value="1">Is Primary</mat-radio-button> -->
+                    <div class="flex-end">
+                      <button mat-button (click)="removeImage(vehicleStockImg)">REMOVE</button>
+                    </div>
+                  </mat-card-actions>
+                </mat-card>
+              </li>
+            </ol>
+            <!-- </mat-radio-group> -->
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </form>
+</div>

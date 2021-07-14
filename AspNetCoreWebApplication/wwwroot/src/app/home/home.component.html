@@ -1,0 +1,18 @@
+<div class="row" style="margin-left: 16px">
+  <h1>Welcome to CMS Vehicle Stock Manager</h1>
+</div>
+
+<ul *ngIf="!(isAuthenticated | async)">
+  <li class="nav-item">
+    <a class="nav-link text-dark" [routerLink]='["/authentication/register"]'>Register</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link text-dark" [routerLink]='["/authentication/login"]'>Login</a>
+  </li>
+</ul>
+
+<ul *ngIf="(isAuthenticated | async)">
+  <li class="nav-item">
+    <a class="nav-link text-dark" [routerLink]='["/stock"]'>Vehicle Stocks</a>
+  </li>
+</ul>
